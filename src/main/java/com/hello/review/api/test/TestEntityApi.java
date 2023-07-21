@@ -1,4 +1,4 @@
-package com.hello.review.api;
+package com.hello.review.api.test;
 
 
 import com.hello.review.service.TestService;
