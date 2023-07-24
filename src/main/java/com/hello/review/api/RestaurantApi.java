@@ -1,10 +1,16 @@
 package com.hello.review.api;
 
 import com.hello.review.api.request.CreateAndEditRestaurantRequest;
+import com.hello.review.model.RestaurantEntity;
+import com.hello.review.service.RestaurantService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 public class RestaurantApi {
+
+    private final RestaurantService restaurantService;
 
     //Todo 맛집 리스트 가져오기
     @GetMapping("/restaurants")
@@ -22,27 +28,27 @@ public class RestaurantApi {
 
     //Todo 맛집 생성
     @PostMapping("/restaurant")
-    public String createRestaurant(
+    public void createRestaurant(
             @RequestBody CreateAndEditRestaurantRequest request
             ) {
-        return "This is createRestaurant, name=" + request.getName() + " address=" + request.getAddress() + " , menu[0].name=" + request.getMenus().get(0).getName() + " , menu[0].price=" + request.getMenus().get(0).getPrice();
+        restaurantService.createRestaurant(request);
     }
 
     //Todo 맛집 수정
     @PutMapping("/restaurant/{restaurantId}")
-    public String editRestaurant(
+    public void editRestaurant(
             @PathVariable Long restaurantId,
             @RequestBody CreateAndEditRestaurantRequest request
     ) {
-        return "This is editRestaurant, " + restaurantId + " name=" + request.getName() + " address=" + request.getAddress();
+        restaurantService.editRestaurant(restaurantId, request);
     }
 
     //Todo 맛집 삭제
     @DeleteMapping("/restaurant/{restaurantId}")
-    public String deleteRestaurant(
+    public void deleteRestaurant(
             @PathVariable Long restaurantId
     ) {
-        return "This is deleteRestaurant, " + restaurantId;
+        restaurantService.deleteRestaurant(restaurantId);
     }
 
 }
