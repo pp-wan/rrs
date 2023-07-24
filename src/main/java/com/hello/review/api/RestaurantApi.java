@@ -1,10 +1,12 @@
 package com.hello.review.api;
 
 import com.hello.review.api.request.CreateAndEditRestaurantRequest;
-import com.hello.review.model.RestaurantEntity;
+import com.hello.review.api.response.RestaurantDetailView;
+import com.hello.review.api.response.RestaurantView;
 import com.hello.review.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -14,16 +16,17 @@ public class RestaurantApi {
 
     //Todo 맛집 리스트 가져오기
     @GetMapping("/restaurants")
-    public String getRestaurants() {
-        return "This is getRestaurants";
+    public List<RestaurantView> getRestaurants() {
+        return restaurantService.getAllRestaurants();
     }
 
     //Todo 맛집 정보 가져오기
     @GetMapping("/restaurant/{restaurantId}")
-    public String getRestaurant(
+    public RestaurantDetailView getRestaurant(
             @PathVariable Long restaurantId
     ) {
-        return "This is getRestaurant, " + restaurantId;
+        return restaurantService.getRestaurantDetail(restaurantId);
+
     }
 
     //Todo 맛집 생성
